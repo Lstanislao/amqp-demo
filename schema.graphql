@@ -1,0 +1,5362 @@
+input AccessInfoInput {
+  enableSports: Boolean
+  enableHorses: Boolean
+  lastConnection: Date
+}
+
+type Admin {
+  role: Float!
+  commission: Float
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type Agent {
+  name: String!
+  dni: String!
+  unitValue: Float!
+  bets: [Bet]!
+  active: Boolean
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type AgentBalance {
+  balance: Float!
+  adjust: Float!
+  thisWeek: Float!
+  date: Date!
+  lastWeek: Float!
+  beforeMakeup: Float!
+  agent: Agent
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type AgentBalancePagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [AgentBalance!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+"""List of items with pagination."""
+type AgentPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Agent!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type BankAccount {
+  name: String!
+  email: String!
+  numberAccount: Float!
+  beneficiary: String!
+  ABBANumber: String!
+  typeMoney: String!
+  player: Player
+  creditCards: [CreditCard]!
+  retirements: [Retirement]!
+  transfers: [Transfer]!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type BankAccountPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [BankAccount!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+input BasicInfoInput {
+  firstName: String
+  lastName: String
+  dniType: Int
+  dni: String
+  address: String
+  phone: String
+}
+
+type Bet {
+  ticket: String!
+  type: String!
+  date: Date!
+  sport: String!
+  description: String!
+  amount: Float!
+  game: String!
+  profit: Float!
+  result: String!
+  user: User
+  agents: [Agent]!
+  hour: Date!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type BetHistory {
+  result: Float!
+  tax: Float!
+  bet: MongoID!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type BetHistoryPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [BetHistory!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+"""List of items with pagination."""
+type BetPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Bet!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+"""The `Boolean` scalar type represents `true` or `false`."""
+scalar Boolean
+
+"""The `Boolean` scalar type represents `true` or `false`."""
+scalar Boolean
+
+input ChangePasswordInput {
+  token: String!
+  password: String!
+}
+
+input ChangePasswordWithOldPasswordInput {
+  oldPassword: String!
+  newPassword: String!
+  newPasswordConfirm: String!
+}
+
+input CreateAgentInput {
+  name: String!
+  dni: String!
+  unitValue: Float!
+}
+
+""""""
+input CreateManyBetInput {
+  ticket: String!
+  type: String!
+  date: Date!
+  sport: String!
+  description: String!
+  amount: Float!
+  game: String!
+  profit: Float!
+  result: String!
+  user: MongoID!
+  agents: [MongoID]
+  hour: Date!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateManyBetPayload {
+  """Documents IDs"""
+  recordIds: [MongoID!]!
+
+  """Created documents"""
+  records: [Bet!]
+
+  """Number of created documents"""
+  createdCount: Int!
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneAgentBalanceInput {
+  balance: Float!
+  adjust: Float!
+  thisWeek: Float!
+  date: Date!
+  lastWeek: Float!
+  beforeMakeup: Float!
+  agent: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneAgentBalancePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: AgentBalance
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneBankAccountInput {
+  name: String!
+  email: String!
+  numberAccount: Float!
+  beneficiary: String!
+  ABBANumber: String!
+  typeMoney: String!
+  player: MongoID!
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneBankAccountPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: BankAccount
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneBetHistoryInput {
+  result: Float!
+  tax: Float!
+  bet: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneBetHistoryPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: BetHistory
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneBetInput {
+  ticket: String!
+  type: String!
+  date: Date!
+  sport: String!
+  description: String!
+  amount: Float!
+  game: String!
+  profit: Float!
+  result: String!
+  user: MongoID!
+  agents: [MongoID]
+  hour: Date!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Bet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneCreditCardInput {
+  cardNumber: Float!
+  expirationDate: Date!
+  securityCode: String!
+  nameOwner: String!
+  bankAccount: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneCreditCardPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: CreditCard
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneHorseRacingInput {
+  date: Date!
+  status: String!
+  raceCenter: String!
+  raceNumber: String!
+  amountPlay: Float!
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneHorseRacingPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: HorseRacing
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneMacuareInput {
+  multi: Float!
+  amountWin: Float!
+  horses: [String]
+  date: Date!
+  horseRacing: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneMacuarePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Macuare
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneMarcaInput {
+  race: String!
+  logro: String!
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneMarcaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Marca
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneOpenBetInput {
+  risk: Float!
+  toWin: Float!
+  bet: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneOpenBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: OpenBet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOnePollaHipicaInput {
+  cost: Float!
+  amount: Float!
+  commission: Float!
+  place: Float!
+  date: Date!
+  horseRacing: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOnePollaHipicaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: PollaHipica
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOnePuestoInput {
+  race: String!
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOnePuestoPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Puesto
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneRetirementInput {
+  method: String!
+  amount: Float!
+  status: Float!
+  date: Date!
+  bankAccount: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneRetirementPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Retirement
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneTablaFijaInput {
+  commission: Float!
+  total: Float!
+  toPage: Float!
+  money: Float!
+  horses: [TablaFijaHorsesInput]
+  horseRacing: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneTablaFijaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: TablaFija
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneTransferInput {
+  typeDeposit: String!
+  amount: Float!
+  numberRef: Float!
+  status: String!
+  date: Date!
+  bankAccount: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneTransferPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Transfer
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateOneWeekBalanceAgentInput {
+  pmts: Float!
+  balance: Float!
+  pending: Float!
+  dayOfWeek: Float!
+  date: Date!
+  bet: MongoID!
+  agent: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateOneWeekBalanceAgentPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: WeekBalanceAgent
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type CreditCard {
+  cardNumber: Float!
+  expirationDate: Date!
+  securityCode: String!
+  nameOwner: String!
+  bankAccount: BankAccount
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type CreditCardPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [CreditCard!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+scalar Date
+
+interface ErrorInterface {
+  """Generic error message"""
+  message: String
+}
+
+input FilterFindManyAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindManyAgentBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyAgentBalanceInput {
+  balance: Float
+  adjust: Float
+  thisWeek: Float
+  date: Date
+  lastWeek: Float
+  beforeMakeup: Float
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyAgentBalanceOperatorsInput
+  OR: [FilterFindManyAgentBalanceInput!]
+  AND: [FilterFindManyAgentBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyAgentBalanceOperatorsInput {
+  _id: FilterFindManyAgentBalance_idOperatorsInput
+}
+
+""""""
+input FilterFindManyAgentInput {
+  name: String
+  dni: String
+  unitValue: Float
+  bets: [MongoID]
+  active: Boolean
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyAgentOperatorsInput
+  OR: [FilterFindManyAgentInput!]
+  AND: [FilterFindManyAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyAgentOperatorsInput {
+  _id: FilterFindManyAgent_idOperatorsInput
+}
+
+input FilterFindManyBankAccount_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyBankAccountInput {
+  name: String
+  email: String
+  numberAccount: Float
+  beneficiary: String
+  ABBANumber: String
+  typeMoney: String
+  player: MongoID
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyBankAccountOperatorsInput
+  OR: [FilterFindManyBankAccountInput!]
+  AND: [FilterFindManyBankAccountInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyBankAccountOperatorsInput {
+  _id: FilterFindManyBankAccount_idOperatorsInput
+}
+
+input FilterFindManyBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindManyBetHistory_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyBetHistoryInput {
+  result: Float
+  tax: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyBetHistoryOperatorsInput
+  OR: [FilterFindManyBetHistoryInput!]
+  AND: [FilterFindManyBetHistoryInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyBetHistoryOperatorsInput {
+  _id: FilterFindManyBetHistory_idOperatorsInput
+}
+
+""""""
+input FilterFindManyBetInput {
+  ticket: String
+  type: String
+  date: Date
+  sport: String
+  description: String
+  amount: Float
+  game: String
+  profit: Float
+  result: String
+  user: MongoID
+  agents: [MongoID]
+  hour: Date
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyBetOperatorsInput
+  OR: [FilterFindManyBetInput!]
+  AND: [FilterFindManyBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyBetOperatorsInput {
+  _id: FilterFindManyBet_idOperatorsInput
+}
+
+input FilterFindManyCreditCard_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyCreditCardInput {
+  cardNumber: Float
+  expirationDate: Date
+  securityCode: String
+  nameOwner: String
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyCreditCardOperatorsInput
+  OR: [FilterFindManyCreditCardInput!]
+  AND: [FilterFindManyCreditCardInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyCreditCardOperatorsInput {
+  _id: FilterFindManyCreditCard_idOperatorsInput
+}
+
+input FilterFindManyHorseRacing_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyHorseRacingInput {
+  date: Date
+  status: String
+  raceCenter: String
+  raceNumber: String
+  amountPlay: Float
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyHorseRacingOperatorsInput
+  OR: [FilterFindManyHorseRacingInput!]
+  AND: [FilterFindManyHorseRacingInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyHorseRacingOperatorsInput {
+  _id: FilterFindManyHorseRacing_idOperatorsInput
+}
+
+input FilterFindManyMacuare_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyMacuareInput {
+  multi: Float
+  amountWin: Float
+  horses: [String]
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyMacuareOperatorsInput
+  OR: [FilterFindManyMacuareInput!]
+  AND: [FilterFindManyMacuareInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyMacuareOperatorsInput {
+  _id: FilterFindManyMacuare_idOperatorsInput
+}
+
+input FilterFindManyMarca_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyMarcaInput {
+  race: String
+  logro: String
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyMarcaOperatorsInput
+  OR: [FilterFindManyMarcaInput!]
+  AND: [FilterFindManyMarcaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyMarcaOperatorsInput {
+  _id: FilterFindManyMarca_idOperatorsInput
+}
+
+input FilterFindManyOpenBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyOpenBetInput {
+  risk: Float
+  toWin: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyOpenBetOperatorsInput
+  OR: [FilterFindManyOpenBetInput!]
+  AND: [FilterFindManyOpenBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyOpenBetOperatorsInput {
+  _id: FilterFindManyOpenBet_idOperatorsInput
+}
+
+input FilterFindManyPlayerBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyPlayerBalanceInput {
+  date: String
+  balance: Float
+  avariable: Float
+  risk: Float
+  wins: Float
+  loses: Float
+  deposits: Float
+  retreats: Float
+  player: MongoID
+  bank: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyPlayerBalanceOperatorsInput
+  OR: [FilterFindManyPlayerBalanceInput!]
+  AND: [FilterFindManyPlayerBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyPlayerBalanceOperatorsInput {
+  _id: FilterFindManyPlayerBalance_idOperatorsInput
+}
+
+input FilterFindManyPollaHipica_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyPollaHipicaInput {
+  cost: Float
+  amount: Float
+  commission: Float
+  place: Float
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyPollaHipicaOperatorsInput
+  OR: [FilterFindManyPollaHipicaInput!]
+  AND: [FilterFindManyPollaHipicaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyPollaHipicaOperatorsInput {
+  _id: FilterFindManyPollaHipica_idOperatorsInput
+}
+
+input FilterFindManyPuesto_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyPuestoInput {
+  race: String
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyPuestoOperatorsInput
+  OR: [FilterFindManyPuestoInput!]
+  AND: [FilterFindManyPuestoInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyPuestoOperatorsInput {
+  _id: FilterFindManyPuesto_idOperatorsInput
+}
+
+input FilterFindManyRetirement_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyRetirementInput {
+  method: String
+  amount: Float
+  status: Float
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyRetirementOperatorsInput
+  OR: [FilterFindManyRetirementInput!]
+  AND: [FilterFindManyRetirementInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyRetirementOperatorsInput {
+  _id: FilterFindManyRetirement_idOperatorsInput
+}
+
+input FilterFindManyTablaFija_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyTablaFijaHorsesInput {
+  specimen: String
+  value: String
+  limit: String
+  dividend: Float
+  proportion: Float
+  _id: MongoID
+}
+
+""""""
+input FilterFindManyTablaFijaInput {
+  commission: Float
+  total: Float
+  toPage: Float
+  money: Float
+  horses: [FilterFindManyTablaFijaHorsesInput]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyTablaFijaOperatorsInput
+  OR: [FilterFindManyTablaFijaInput!]
+  AND: [FilterFindManyTablaFijaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyTablaFijaOperatorsInput {
+  _id: FilterFindManyTablaFija_idOperatorsInput
+}
+
+input FilterFindManyTransfer_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyTransferInput {
+  typeDeposit: String
+  amount: Float
+  numberRef: Float
+  status: String
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyTransferOperatorsInput
+  OR: [FilterFindManyTransferInput!]
+  AND: [FilterFindManyTransferInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyTransferOperatorsInput {
+  _id: FilterFindManyTransfer_idOperatorsInput
+}
+
+input FilterFindManyUser_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindManyUserEmailOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyUserInput {
+  username: String
+  firstName: String
+  lastName: String
+  dni: String
+  dniType: Float
+  email: String
+  photo: String
+  password: String
+  address: String
+  role: Float
+  phone: String
+  player: MongoID
+  admin: MongoID
+  active: Boolean
+  resetToken: String
+  resetTokenExpiry: Float
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyUserOperatorsInput
+  OR: [FilterFindManyUserInput!]
+  AND: [FilterFindManyUserInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyUserOperatorsInput {
+  username: FilterFindManyUserUsernameOperatorsInput
+  email: FilterFindManyUserEmailOperatorsInput
+  _id: FilterFindManyUser_idOperatorsInput
+}
+
+input FilterFindManyUserUsernameOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterFindManyWeekBalanceAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindManyWeekBalanceAgentInput {
+  pmts: Float
+  balance: Float
+  pending: Float
+  dayOfWeek: Float
+  date: Date
+  bet: MongoID
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyWeekBalanceAgentOperatorsInput
+  OR: [FilterFindManyWeekBalanceAgentInput!]
+  AND: [FilterFindManyWeekBalanceAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyWeekBalanceAgentOperatorsInput {
+  _id: FilterFindManyWeekBalanceAgent_idOperatorsInput
+}
+
+input FilterFindOneAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindOneAgentBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneAgentBalanceInput {
+  balance: Float
+  adjust: Float
+  thisWeek: Float
+  date: Date
+  lastWeek: Float
+  beforeMakeup: Float
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneAgentBalanceOperatorsInput
+  OR: [FilterFindOneAgentBalanceInput!]
+  AND: [FilterFindOneAgentBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneAgentBalanceOperatorsInput {
+  _id: FilterFindOneAgentBalance_idOperatorsInput
+}
+
+""""""
+input FilterFindOneAgentInput {
+  name: String
+  dni: String
+  unitValue: Float
+  bets: [MongoID]
+  active: Boolean
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneAgentOperatorsInput
+  OR: [FilterFindOneAgentInput!]
+  AND: [FilterFindOneAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneAgentOperatorsInput {
+  _id: FilterFindOneAgent_idOperatorsInput
+}
+
+input FilterFindOneBankAccount_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneBankAccountInput {
+  name: String
+  email: String
+  numberAccount: Float
+  beneficiary: String
+  ABBANumber: String
+  typeMoney: String
+  player: MongoID
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneBankAccountOperatorsInput
+  OR: [FilterFindOneBankAccountInput!]
+  AND: [FilterFindOneBankAccountInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneBankAccountOperatorsInput {
+  _id: FilterFindOneBankAccount_idOperatorsInput
+}
+
+input FilterFindOneBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindOneBetHistory_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneBetHistoryInput {
+  result: Float
+  tax: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneBetHistoryOperatorsInput
+  OR: [FilterFindOneBetHistoryInput!]
+  AND: [FilterFindOneBetHistoryInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneBetHistoryOperatorsInput {
+  _id: FilterFindOneBetHistory_idOperatorsInput
+}
+
+""""""
+input FilterFindOneBetInput {
+  ticket: String
+  type: String
+  date: Date
+  sport: String
+  description: String
+  amount: Float
+  game: String
+  profit: Float
+  result: String
+  user: MongoID
+  agents: [MongoID]
+  hour: Date
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneBetOperatorsInput
+  OR: [FilterFindOneBetInput!]
+  AND: [FilterFindOneBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneBetOperatorsInput {
+  _id: FilterFindOneBet_idOperatorsInput
+}
+
+input FilterFindOneCreditCard_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneCreditCardInput {
+  cardNumber: Float
+  expirationDate: Date
+  securityCode: String
+  nameOwner: String
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneCreditCardOperatorsInput
+  OR: [FilterFindOneCreditCardInput!]
+  AND: [FilterFindOneCreditCardInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneCreditCardOperatorsInput {
+  _id: FilterFindOneCreditCard_idOperatorsInput
+}
+
+input FilterFindOneHorseRacing_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneHorseRacingInput {
+  date: Date
+  status: String
+  raceCenter: String
+  raceNumber: String
+  amountPlay: Float
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneHorseRacingOperatorsInput
+  OR: [FilterFindOneHorseRacingInput!]
+  AND: [FilterFindOneHorseRacingInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneHorseRacingOperatorsInput {
+  _id: FilterFindOneHorseRacing_idOperatorsInput
+}
+
+input FilterFindOneMacuare_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneMacuareInput {
+  multi: Float
+  amountWin: Float
+  horses: [String]
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneMacuareOperatorsInput
+  OR: [FilterFindOneMacuareInput!]
+  AND: [FilterFindOneMacuareInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneMacuareOperatorsInput {
+  _id: FilterFindOneMacuare_idOperatorsInput
+}
+
+input FilterFindOneMarca_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneMarcaInput {
+  race: String
+  logro: String
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneMarcaOperatorsInput
+  OR: [FilterFindOneMarcaInput!]
+  AND: [FilterFindOneMarcaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneMarcaOperatorsInput {
+  _id: FilterFindOneMarca_idOperatorsInput
+}
+
+input FilterFindOneOpenBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneOpenBetInput {
+  risk: Float
+  toWin: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneOpenBetOperatorsInput
+  OR: [FilterFindOneOpenBetInput!]
+  AND: [FilterFindOneOpenBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneOpenBetOperatorsInput {
+  _id: FilterFindOneOpenBet_idOperatorsInput
+}
+
+input FilterFindOnePlayerBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOnePlayerBalanceInput {
+  date: String
+  balance: Float
+  avariable: Float
+  risk: Float
+  wins: Float
+  loses: Float
+  deposits: Float
+  retreats: Float
+  player: MongoID
+  bank: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOnePlayerBalanceOperatorsInput
+  OR: [FilterFindOnePlayerBalanceInput!]
+  AND: [FilterFindOnePlayerBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOnePlayerBalanceOperatorsInput {
+  _id: FilterFindOnePlayerBalance_idOperatorsInput
+}
+
+input FilterFindOnePollaHipica_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOnePollaHipicaInput {
+  cost: Float
+  amount: Float
+  commission: Float
+  place: Float
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOnePollaHipicaOperatorsInput
+  OR: [FilterFindOnePollaHipicaInput!]
+  AND: [FilterFindOnePollaHipicaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOnePollaHipicaOperatorsInput {
+  _id: FilterFindOnePollaHipica_idOperatorsInput
+}
+
+input FilterFindOnePuesto_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOnePuestoInput {
+  race: String
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOnePuestoOperatorsInput
+  OR: [FilterFindOnePuestoInput!]
+  AND: [FilterFindOnePuestoInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOnePuestoOperatorsInput {
+  _id: FilterFindOnePuesto_idOperatorsInput
+}
+
+input FilterFindOneRetirement_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneRetirementInput {
+  method: String
+  amount: Float
+  status: Float
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneRetirementOperatorsInput
+  OR: [FilterFindOneRetirementInput!]
+  AND: [FilterFindOneRetirementInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneRetirementOperatorsInput {
+  _id: FilterFindOneRetirement_idOperatorsInput
+}
+
+input FilterFindOneTablaFija_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneTablaFijaHorsesInput {
+  specimen: String
+  value: String
+  limit: String
+  dividend: Float
+  proportion: Float
+  _id: MongoID
+}
+
+""""""
+input FilterFindOneTablaFijaInput {
+  commission: Float
+  total: Float
+  toPage: Float
+  money: Float
+  horses: [FilterFindOneTablaFijaHorsesInput]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneTablaFijaOperatorsInput
+  OR: [FilterFindOneTablaFijaInput!]
+  AND: [FilterFindOneTablaFijaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneTablaFijaOperatorsInput {
+  _id: FilterFindOneTablaFija_idOperatorsInput
+}
+
+input FilterFindOneTransfer_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneTransferInput {
+  typeDeposit: String
+  amount: Float
+  numberRef: Float
+  status: String
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneTransferOperatorsInput
+  OR: [FilterFindOneTransferInput!]
+  AND: [FilterFindOneTransferInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneTransferOperatorsInput {
+  _id: FilterFindOneTransfer_idOperatorsInput
+}
+
+input FilterFindOneUser_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindOneUserEmailOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneUserInput {
+  username: String
+  firstName: String
+  lastName: String
+  dni: String
+  dniType: Float
+  email: String
+  photo: String
+  password: String
+  address: String
+  role: Float
+  phone: String
+  player: MongoID
+  admin: MongoID
+  active: Boolean
+  resetToken: String
+  resetTokenExpiry: Float
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneUserOperatorsInput
+  OR: [FilterFindOneUserInput!]
+  AND: [FilterFindOneUserInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneUserOperatorsInput {
+  username: FilterFindOneUserUsernameOperatorsInput
+  email: FilterFindOneUserEmailOperatorsInput
+  _id: FilterFindOneUser_idOperatorsInput
+}
+
+input FilterFindOneUserUsernameOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterFindOneWeekBalanceAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterFindOneWeekBalanceAgentInput {
+  pmts: Float
+  balance: Float
+  pending: Float
+  dayOfWeek: Float
+  date: Date
+  bet: MongoID
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneWeekBalanceAgentOperatorsInput
+  OR: [FilterFindOneWeekBalanceAgentInput!]
+  AND: [FilterFindOneWeekBalanceAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneWeekBalanceAgentOperatorsInput {
+  _id: FilterFindOneWeekBalanceAgent_idOperatorsInput
+}
+
+input FilterRemoveOneAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterRemoveOneAgentBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneAgentBalanceInput {
+  balance: Float
+  adjust: Float
+  thisWeek: Float
+  date: Date
+  lastWeek: Float
+  beforeMakeup: Float
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneAgentBalanceOperatorsInput
+  OR: [FilterRemoveOneAgentBalanceInput!]
+  AND: [FilterRemoveOneAgentBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneAgentBalanceOperatorsInput {
+  _id: FilterRemoveOneAgentBalance_idOperatorsInput
+}
+
+""""""
+input FilterRemoveOneAgentInput {
+  name: String
+  dni: String
+  unitValue: Float
+  bets: [MongoID]
+  active: Boolean
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneAgentOperatorsInput
+  OR: [FilterRemoveOneAgentInput!]
+  AND: [FilterRemoveOneAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneAgentOperatorsInput {
+  _id: FilterRemoveOneAgent_idOperatorsInput
+}
+
+input FilterRemoveOneBankAccount_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneBankAccountInput {
+  name: String
+  email: String
+  numberAccount: Float
+  beneficiary: String
+  ABBANumber: String
+  typeMoney: String
+  player: MongoID
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneBankAccountOperatorsInput
+  OR: [FilterRemoveOneBankAccountInput!]
+  AND: [FilterRemoveOneBankAccountInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneBankAccountOperatorsInput {
+  _id: FilterRemoveOneBankAccount_idOperatorsInput
+}
+
+input FilterRemoveOneBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterRemoveOneBetHistory_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneBetHistoryInput {
+  result: Float
+  tax: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneBetHistoryOperatorsInput
+  OR: [FilterRemoveOneBetHistoryInput!]
+  AND: [FilterRemoveOneBetHistoryInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneBetHistoryOperatorsInput {
+  _id: FilterRemoveOneBetHistory_idOperatorsInput
+}
+
+""""""
+input FilterRemoveOneBetInput {
+  ticket: String
+  type: String
+  date: Date
+  sport: String
+  description: String
+  amount: Float
+  game: String
+  profit: Float
+  result: String
+  user: MongoID
+  agents: [MongoID]
+  hour: Date
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneBetOperatorsInput
+  OR: [FilterRemoveOneBetInput!]
+  AND: [FilterRemoveOneBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneBetOperatorsInput {
+  _id: FilterRemoveOneBet_idOperatorsInput
+}
+
+input FilterRemoveOneCreditCard_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneCreditCardInput {
+  cardNumber: Float
+  expirationDate: Date
+  securityCode: String
+  nameOwner: String
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneCreditCardOperatorsInput
+  OR: [FilterRemoveOneCreditCardInput!]
+  AND: [FilterRemoveOneCreditCardInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneCreditCardOperatorsInput {
+  _id: FilterRemoveOneCreditCard_idOperatorsInput
+}
+
+input FilterRemoveOneHorseRacing_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneHorseRacingInput {
+  date: Date
+  status: String
+  raceCenter: String
+  raceNumber: String
+  amountPlay: Float
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneHorseRacingOperatorsInput
+  OR: [FilterRemoveOneHorseRacingInput!]
+  AND: [FilterRemoveOneHorseRacingInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneHorseRacingOperatorsInput {
+  _id: FilterRemoveOneHorseRacing_idOperatorsInput
+}
+
+input FilterRemoveOneMacuare_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneMacuareInput {
+  multi: Float
+  amountWin: Float
+  horses: [String]
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneMacuareOperatorsInput
+  OR: [FilterRemoveOneMacuareInput!]
+  AND: [FilterRemoveOneMacuareInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneMacuareOperatorsInput {
+  _id: FilterRemoveOneMacuare_idOperatorsInput
+}
+
+input FilterRemoveOneMarca_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneMarcaInput {
+  race: String
+  logro: String
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneMarcaOperatorsInput
+  OR: [FilterRemoveOneMarcaInput!]
+  AND: [FilterRemoveOneMarcaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneMarcaOperatorsInput {
+  _id: FilterRemoveOneMarca_idOperatorsInput
+}
+
+input FilterRemoveOneOpenBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneOpenBetInput {
+  risk: Float
+  toWin: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneOpenBetOperatorsInput
+  OR: [FilterRemoveOneOpenBetInput!]
+  AND: [FilterRemoveOneOpenBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneOpenBetOperatorsInput {
+  _id: FilterRemoveOneOpenBet_idOperatorsInput
+}
+
+input FilterRemoveOnePollaHipica_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOnePollaHipicaInput {
+  cost: Float
+  amount: Float
+  commission: Float
+  place: Float
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOnePollaHipicaOperatorsInput
+  OR: [FilterRemoveOnePollaHipicaInput!]
+  AND: [FilterRemoveOnePollaHipicaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOnePollaHipicaOperatorsInput {
+  _id: FilterRemoveOnePollaHipica_idOperatorsInput
+}
+
+input FilterRemoveOnePuesto_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOnePuestoInput {
+  race: String
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOnePuestoOperatorsInput
+  OR: [FilterRemoveOnePuestoInput!]
+  AND: [FilterRemoveOnePuestoInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOnePuestoOperatorsInput {
+  _id: FilterRemoveOnePuesto_idOperatorsInput
+}
+
+input FilterRemoveOneRetirement_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneRetirementInput {
+  method: String
+  amount: Float
+  status: Float
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneRetirementOperatorsInput
+  OR: [FilterRemoveOneRetirementInput!]
+  AND: [FilterRemoveOneRetirementInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneRetirementOperatorsInput {
+  _id: FilterRemoveOneRetirement_idOperatorsInput
+}
+
+input FilterRemoveOneTablaFija_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneTablaFijaHorsesInput {
+  specimen: String
+  value: String
+  limit: String
+  dividend: Float
+  proportion: Float
+  _id: MongoID
+}
+
+""""""
+input FilterRemoveOneTablaFijaInput {
+  commission: Float
+  total: Float
+  toPage: Float
+  money: Float
+  horses: [FilterRemoveOneTablaFijaHorsesInput]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneTablaFijaOperatorsInput
+  OR: [FilterRemoveOneTablaFijaInput!]
+  AND: [FilterRemoveOneTablaFijaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneTablaFijaOperatorsInput {
+  _id: FilterRemoveOneTablaFija_idOperatorsInput
+}
+
+input FilterRemoveOneTransfer_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneTransferInput {
+  typeDeposit: String
+  amount: Float
+  numberRef: Float
+  status: String
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneTransferOperatorsInput
+  OR: [FilterRemoveOneTransferInput!]
+  AND: [FilterRemoveOneTransferInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneTransferOperatorsInput {
+  _id: FilterRemoveOneTransfer_idOperatorsInput
+}
+
+input FilterRemoveOneWeekBalanceAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterRemoveOneWeekBalanceAgentInput {
+  pmts: Float
+  balance: Float
+  pending: Float
+  dayOfWeek: Float
+  date: Date
+  bet: MongoID
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneWeekBalanceAgentOperatorsInput
+  OR: [FilterRemoveOneWeekBalanceAgentInput!]
+  AND: [FilterRemoveOneWeekBalanceAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneWeekBalanceAgentOperatorsInput {
+  _id: FilterRemoveOneWeekBalanceAgent_idOperatorsInput
+}
+
+input FilterUpdateOneAgentBalance_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneAgentBalanceInput {
+  balance: Float
+  adjust: Float
+  thisWeek: Float
+  date: Date
+  lastWeek: Float
+  beforeMakeup: Float
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneAgentBalanceOperatorsInput
+  OR: [FilterUpdateOneAgentBalanceInput!]
+  AND: [FilterUpdateOneAgentBalanceInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneAgentBalanceOperatorsInput {
+  _id: FilterUpdateOneAgentBalance_idOperatorsInput
+}
+
+input FilterUpdateOneBankAccount_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneBankAccountInput {
+  name: String
+  email: String
+  numberAccount: Float
+  beneficiary: String
+  ABBANumber: String
+  typeMoney: String
+  player: MongoID
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneBankAccountOperatorsInput
+  OR: [FilterUpdateOneBankAccountInput!]
+  AND: [FilterUpdateOneBankAccountInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneBankAccountOperatorsInput {
+  _id: FilterUpdateOneBankAccount_idOperatorsInput
+}
+
+input FilterUpdateOneBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterUpdateOneBetHistory_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneBetHistoryInput {
+  result: Float
+  tax: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneBetHistoryOperatorsInput
+  OR: [FilterUpdateOneBetHistoryInput!]
+  AND: [FilterUpdateOneBetHistoryInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneBetHistoryOperatorsInput {
+  _id: FilterUpdateOneBetHistory_idOperatorsInput
+}
+
+""""""
+input FilterUpdateOneBetInput {
+  ticket: String
+  type: String
+  date: Date
+  sport: String
+  description: String
+  amount: Float
+  game: String
+  profit: Float
+  result: String
+  user: MongoID
+  agents: [MongoID]
+  hour: Date
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneBetOperatorsInput
+  OR: [FilterUpdateOneBetInput!]
+  AND: [FilterUpdateOneBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneBetOperatorsInput {
+  _id: FilterUpdateOneBet_idOperatorsInput
+}
+
+input FilterUpdateOneCreditCard_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneCreditCardInput {
+  cardNumber: Float
+  expirationDate: Date
+  securityCode: String
+  nameOwner: String
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneCreditCardOperatorsInput
+  OR: [FilterUpdateOneCreditCardInput!]
+  AND: [FilterUpdateOneCreditCardInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneCreditCardOperatorsInput {
+  _id: FilterUpdateOneCreditCard_idOperatorsInput
+}
+
+input FilterUpdateOneHorseRacing_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneHorseRacingInput {
+  date: Date
+  status: String
+  raceCenter: String
+  raceNumber: String
+  amountPlay: Float
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneHorseRacingOperatorsInput
+  OR: [FilterUpdateOneHorseRacingInput!]
+  AND: [FilterUpdateOneHorseRacingInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneHorseRacingOperatorsInput {
+  _id: FilterUpdateOneHorseRacing_idOperatorsInput
+}
+
+input FilterUpdateOneMacuare_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneMacuareInput {
+  multi: Float
+  amountWin: Float
+  horses: [String]
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneMacuareOperatorsInput
+  OR: [FilterUpdateOneMacuareInput!]
+  AND: [FilterUpdateOneMacuareInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneMacuareOperatorsInput {
+  _id: FilterUpdateOneMacuare_idOperatorsInput
+}
+
+input FilterUpdateOneMarca_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneMarcaInput {
+  race: String
+  logro: String
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneMarcaOperatorsInput
+  OR: [FilterUpdateOneMarcaInput!]
+  AND: [FilterUpdateOneMarcaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneMarcaOperatorsInput {
+  _id: FilterUpdateOneMarca_idOperatorsInput
+}
+
+input FilterUpdateOneOpenBet_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneOpenBetInput {
+  risk: Float
+  toWin: Float
+  bet: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneOpenBetOperatorsInput
+  OR: [FilterUpdateOneOpenBetInput!]
+  AND: [FilterUpdateOneOpenBetInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneOpenBetOperatorsInput {
+  _id: FilterUpdateOneOpenBet_idOperatorsInput
+}
+
+input FilterUpdateOnePollaHipica_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOnePollaHipicaInput {
+  cost: Float
+  amount: Float
+  commission: Float
+  place: Float
+  date: Date
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOnePollaHipicaOperatorsInput
+  OR: [FilterUpdateOnePollaHipicaInput!]
+  AND: [FilterUpdateOnePollaHipicaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOnePollaHipicaOperatorsInput {
+  _id: FilterUpdateOnePollaHipica_idOperatorsInput
+}
+
+input FilterUpdateOnePuesto_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOnePuestoInput {
+  race: String
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOnePuestoOperatorsInput
+  OR: [FilterUpdateOnePuestoInput!]
+  AND: [FilterUpdateOnePuestoInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOnePuestoOperatorsInput {
+  _id: FilterUpdateOnePuesto_idOperatorsInput
+}
+
+input FilterUpdateOneRetirement_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneRetirementInput {
+  method: String
+  amount: Float
+  status: Float
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneRetirementOperatorsInput
+  OR: [FilterUpdateOneRetirementInput!]
+  AND: [FilterUpdateOneRetirementInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneRetirementOperatorsInput {
+  _id: FilterUpdateOneRetirement_idOperatorsInput
+}
+
+input FilterUpdateOneTablaFija_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneTablaFijaHorsesInput {
+  specimen: String
+  value: String
+  limit: String
+  dividend: Float
+  proportion: Float
+  _id: MongoID
+}
+
+""""""
+input FilterUpdateOneTablaFijaInput {
+  commission: Float
+  total: Float
+  toPage: Float
+  money: Float
+  horses: [FilterUpdateOneTablaFijaHorsesInput]
+  horseRacing: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneTablaFijaOperatorsInput
+  OR: [FilterUpdateOneTablaFijaInput!]
+  AND: [FilterUpdateOneTablaFijaInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneTablaFijaOperatorsInput {
+  _id: FilterUpdateOneTablaFija_idOperatorsInput
+}
+
+input FilterUpdateOneTransfer_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneTransferInput {
+  typeDeposit: String
+  amount: Float
+  numberRef: Float
+  status: String
+  date: Date
+  bankAccount: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneTransferOperatorsInput
+  OR: [FilterUpdateOneTransferInput!]
+  AND: [FilterUpdateOneTransferInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneTransferOperatorsInput {
+  _id: FilterUpdateOneTransfer_idOperatorsInput
+}
+
+input FilterUpdateOneWeekBalanceAgent_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+""""""
+input FilterUpdateOneWeekBalanceAgentInput {
+  pmts: Float
+  balance: Float
+  pending: Float
+  dayOfWeek: Float
+  date: Date
+  bet: MongoID
+  agent: MongoID
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneWeekBalanceAgentOperatorsInput
+  OR: [FilterUpdateOneWeekBalanceAgentInput!]
+  AND: [FilterUpdateOneWeekBalanceAgentInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneWeekBalanceAgentOperatorsInput {
+  _id: FilterUpdateOneWeekBalanceAgent_idOperatorsInput
+}
+
+"""
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+"""
+scalar Float
+
+type HorseRacing {
+  date: Date!
+  status: String!
+  raceCenter: String!
+  raceNumber: String!
+  amountPlay: Float!
+  sport: Sport
+  pollaHipica: PollaHipica
+  macuare: Macuare
+  marca: Marca
+  puesto: Puesto
+  tablaFija: TablaFija
+  remate: Remate
+  pick: Pick
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type HorseRacingPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [HorseRacing!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+"""
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+"""
+scalar Int
+
+"""
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+"""
+scalar Int
+
+input LimitInfoInput {
+  minWager: Float
+  maxWager: Float
+  onlineMinWager: Float
+  onlineMaxWager: Float
+  tempCredit: Float
+  creditLimit: Float
+}
+
+type Macuare {
+  multi: Float!
+  amountWin: Float!
+  horses: [String]
+  date: Date!
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type MacuarePagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Macuare!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+input MakeDepositInput {
+  typeDeposit: String!
+  numberRef: Int!
+  date: Date!
+  amount: Float!
+  bankAccountId: String!
+}
+
+type Marca {
+  race: String!
+  logro: String!
+  horses: [String]
+  marcas: [String]
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type MarcaPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Marca!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+"""
+The `ID` scalar type represents a unique MongoDB identifier in collection. MongoDB by default use 12-byte ObjectId value (https://docs.mongodb.com/manual/reference/bson-types/#objectid). But MongoDB also may accepts string or integer as correct values for _id field.
+"""
+scalar MongoID
+
+type Mutation {
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createBankAccount(record: CreateOneBankAccountInput!): CreateOneBankAccountPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteBankAccount(
+    """Filter by fields"""
+    filter: FilterRemoveOneBankAccountInput
+    sort: SortRemoveOneBankAccountInput
+  ): RemoveOneBankAccountPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateBankAccount(
+    record: UpdateOneBankAccountInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneBankAccountInput
+    sort: SortUpdateOneBankAccountInput
+    skip: Int
+  ): UpdateOneBankAccountPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createCreditCard(record: CreateOneCreditCardInput!): CreateOneCreditCardPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteCreditCard(
+    """Filter by fields"""
+    filter: FilterRemoveOneCreditCardInput
+    sort: SortRemoveOneCreditCardInput
+  ): RemoveOneCreditCardPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateCreditCard(
+    record: UpdateOneCreditCardInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneCreditCardInput
+    sort: SortUpdateOneCreditCardInput
+    skip: Int
+  ): UpdateOneCreditCardPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createRetirement(record: CreateOneRetirementInput!): CreateOneRetirementPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteRetirement(
+    """Filter by fields"""
+    filter: FilterRemoveOneRetirementInput
+    sort: SortRemoveOneRetirementInput
+  ): RemoveOneRetirementPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateRetirement(
+    record: UpdateOneRetirementInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneRetirementInput
+    sort: SortUpdateOneRetirementInput
+    skip: Int
+  ): UpdateOneRetirementPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createTransfer(record: CreateOneTransferInput!): CreateOneTransferPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteTransfer(
+    """Filter by fields"""
+    filter: FilterRemoveOneTransferInput
+    sort: SortRemoveOneTransferInput
+  ): RemoveOneTransferPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateTransfer(
+    record: UpdateOneTransferInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneTransferInput
+    sort: SortUpdateOneTransferInput
+    skip: Int
+  ): UpdateOneTransferPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createBet(record: CreateOneBetInput!): CreateOneBetPayload
+
+  """
+  Creates Many documents with mongoose defaults, setters, hooks and validation
+  """
+  createManyBet(records: [CreateManyBetInput!]!): CreateManyBetPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteBet(
+    """Filter by fields"""
+    filter: FilterRemoveOneBetInput
+    sort: SortRemoveOneBetInput
+  ): RemoveOneBetPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateBet(
+    record: UpdateOneBetInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneBetInput
+    sort: SortUpdateOneBetInput
+    skip: Int
+  ): UpdateOneBetPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createBetHistory(record: CreateOneBetHistoryInput!): CreateOneBetHistoryPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteBetHistory(
+    """Filter by fields"""
+    filter: FilterRemoveOneBetHistoryInput
+    sort: SortRemoveOneBetHistoryInput
+  ): RemoveOneBetHistoryPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateBetHistory(
+    record: UpdateOneBetHistoryInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneBetHistoryInput
+    sort: SortUpdateOneBetHistoryInput
+    skip: Int
+  ): UpdateOneBetHistoryPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createOpenBet(record: CreateOneOpenBetInput!): CreateOneOpenBetPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteOpenBet(
+    """Filter by fields"""
+    filter: FilterRemoveOneOpenBetInput
+    sort: SortRemoveOneOpenBetInput
+  ): RemoveOneOpenBetPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateOpenBet(
+    record: UpdateOneOpenBetInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneOpenBetInput
+    sort: SortUpdateOneOpenBetInput
+    skip: Int
+  ): UpdateOneOpenBetPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteAgent(
+    """Filter by fields"""
+    filter: FilterRemoveOneAgentInput
+    sort: SortRemoveOneAgentInput
+  ): RemoveOneAgentPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createAgentBalance(record: CreateOneAgentBalanceInput!): CreateOneAgentBalancePayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteAgentBalance(
+    """Filter by fields"""
+    filter: FilterRemoveOneAgentBalanceInput
+    sort: SortRemoveOneAgentBalanceInput
+  ): RemoveOneAgentBalancePayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateAgentBalance(
+    record: UpdateOneAgentBalanceInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneAgentBalanceInput
+    sort: SortUpdateOneAgentBalanceInput
+    skip: Int
+  ): UpdateOneAgentBalancePayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createWeekBalanceAgent(record: CreateOneWeekBalanceAgentInput!): CreateOneWeekBalanceAgentPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteWeekBalanceAgent(
+    """Filter by fields"""
+    filter: FilterRemoveOneWeekBalanceAgentInput
+    sort: SortRemoveOneWeekBalanceAgentInput
+  ): RemoveOneWeekBalanceAgentPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateWeekBalanceAgent(
+    record: UpdateOneWeekBalanceAgentInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneWeekBalanceAgentInput
+    sort: SortUpdateOneWeekBalanceAgentInput
+    skip: Int
+  ): UpdateOneWeekBalanceAgentPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createHorseRacing(record: CreateOneHorseRacingInput!): CreateOneHorseRacingPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteHorseRacing(
+    """Filter by fields"""
+    filter: FilterRemoveOneHorseRacingInput
+    sort: SortRemoveOneHorseRacingInput
+  ): RemoveOneHorseRacingPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateHorseRacing(
+    record: UpdateOneHorseRacingInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneHorseRacingInput
+    sort: SortUpdateOneHorseRacingInput
+    skip: Int
+  ): UpdateOneHorseRacingPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createPollaHipica(record: CreateOnePollaHipicaInput!): CreateOnePollaHipicaPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deletePollaHipica(
+    """Filter by fields"""
+    filter: FilterRemoveOnePollaHipicaInput
+    sort: SortRemoveOnePollaHipicaInput
+  ): RemoveOnePollaHipicaPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updatePollaHipica(
+    record: UpdateOnePollaHipicaInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOnePollaHipicaInput
+    sort: SortUpdateOnePollaHipicaInput
+    skip: Int
+  ): UpdateOnePollaHipicaPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createMacuare(record: CreateOneMacuareInput!): CreateOneMacuarePayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteMacuare(
+    """Filter by fields"""
+    filter: FilterRemoveOneMacuareInput
+    sort: SortRemoveOneMacuareInput
+  ): RemoveOneMacuarePayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateMacuare(
+    record: UpdateOneMacuareInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneMacuareInput
+    sort: SortUpdateOneMacuareInput
+    skip: Int
+  ): UpdateOneMacuarePayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createMarca(record: CreateOneMarcaInput!): CreateOneMarcaPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteMarca(
+    """Filter by fields"""
+    filter: FilterRemoveOneMarcaInput
+    sort: SortRemoveOneMarcaInput
+  ): RemoveOneMarcaPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateMarca(
+    record: UpdateOneMarcaInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneMarcaInput
+    sort: SortUpdateOneMarcaInput
+    skip: Int
+  ): UpdateOneMarcaPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createPuesto(record: CreateOnePuestoInput!): CreateOnePuestoPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deletePuesto(
+    """Filter by fields"""
+    filter: FilterRemoveOnePuestoInput
+    sort: SortRemoveOnePuestoInput
+  ): RemoveOnePuestoPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updatePuesto(
+    record: UpdateOnePuestoInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOnePuestoInput
+    sort: SortUpdateOnePuestoInput
+    skip: Int
+  ): UpdateOnePuestoPayload
+
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  createTablaFija(record: CreateOneTablaFijaInput!): CreateOneTablaFijaPayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  deleteTablaFija(
+    """Filter by fields"""
+    filter: FilterRemoveOneTablaFijaInput
+    sort: SortRemoveOneTablaFijaInput
+  ): RemoveOneTablaFijaPayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  updateTablaFija(
+    record: UpdateOneTablaFijaInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneTablaFijaInput
+    sort: SortUpdateOneTablaFijaInput
+    skip: Int
+  ): UpdateOneTablaFijaPayload
+
+  """Sign Up for a new user in the db"""
+  signUp(data: SignUpInput): User
+
+  """Sign in for an existing user using email or username"""
+  signIn(data: SignInInput): User
+
+  """Sign Out the user from the app"""
+  signOut: SignOutMessage
+
+  """Reset password using email"""
+  resetPassword(data: ResetPasswordInput): ResetPasswordInfo
+
+  """Change Password using a token"""
+  changePassword(data: ChangePasswordInput): ResetPasswordInfo
+
+  """Change Password using a token"""
+  changePasswordWithOldPassword(data: ChangePasswordWithOldPasswordInput): ResetPasswordInfo
+
+  """Update player info from the admin site"""
+  updatePlayer(data: UpdatePlayerInput): User
+
+  """Create new agent"""
+  createAgent(data: CreateAgentInput): Agent
+
+  """Update an agent"""
+  updateAgent(data: UpdateAgentInput): Agent
+
+  """Reset password using email"""
+  makeDeposit(data: MakeDepositInput): Transfer
+}
+
+type OpenBet {
+  risk: Float!
+  toWin: Float!
+  bet: Bet
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type OpenBetPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [OpenBet!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type PaginationInfo {
+  currentPage: Int!
+  perPage: Int!
+  pageCount: Int
+  itemCount: Int
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
+type Pick {
+  type: String!
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type Player {
+  tempCredit: Float
+  enablePlayer: Float
+  enableSports: Boolean
+  enableOnline: Boolean
+  enableHorses: Boolean
+  lastConnection: Date
+  holdBet: Boolean
+  creditLimit: Float
+  onlineMinWager: Float
+  onlineMaxWager: Float
+  minWager: Float
+  maxWager: Float
+  holdDelay: Float
+  bankAccounts: [BankAccount]!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type PlayerBalance {
+  date: String!
+  balance: Float!
+  avariable: Float!
+  risk: Float!
+  wins: Float!
+  loses: Float!
+  deposits: Float!
+  retreats: Float!
+  player: Player
+  bank: [BankAccount]!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type PlayerBalancePagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [PlayerBalance!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type PollaHipica {
+  cost: Float!
+  amount: Float!
+  commission: Float!
+  place: Float!
+  date: Date!
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type PollaHipicaPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [PollaHipica!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type Puesto {
+  race: String!
+  horses: [String]
+  puestos: [String]
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type PuestoPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Puesto!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type Query {
+  user(
+    """Filter by fields"""
+    filter: FilterFindOneUserInput
+    skip: Int
+    sort: SortFindOneUserInput
+  ): User
+  users(
+    """Filter by fields"""
+    filter: FilterFindManyUserInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyUserInput
+  ): [User!]!
+  userPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyUserInput
+    sort: SortFindManyUserInput
+  ): UserPagination
+  bankAccount(
+    """Filter by fields"""
+    filter: FilterFindOneBankAccountInput
+    skip: Int
+    sort: SortFindOneBankAccountInput
+  ): BankAccount
+  bankAccounts(
+    """Filter by fields"""
+    filter: FilterFindManyBankAccountInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyBankAccountInput
+  ): [BankAccount!]!
+  bankAccountsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyBankAccountInput
+    sort: SortFindManyBankAccountInput
+  ): BankAccountPagination
+  creditCard(
+    """Filter by fields"""
+    filter: FilterFindOneCreditCardInput
+    skip: Int
+    sort: SortFindOneCreditCardInput
+  ): CreditCard
+  creditCards(
+    """Filter by fields"""
+    filter: FilterFindManyCreditCardInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyCreditCardInput
+  ): [CreditCard!]!
+  creditCardsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyCreditCardInput
+    sort: SortFindManyCreditCardInput
+  ): CreditCardPagination
+  retirement(
+    """Filter by fields"""
+    filter: FilterFindOneRetirementInput
+    skip: Int
+    sort: SortFindOneRetirementInput
+  ): Retirement
+  retirements(
+    """Filter by fields"""
+    filter: FilterFindManyRetirementInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyRetirementInput
+  ): [Retirement!]!
+  retirementsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyRetirementInput
+    sort: SortFindManyRetirementInput
+  ): RetirementPagination
+  transfer(
+    """Filter by fields"""
+    filter: FilterFindOneTransferInput
+    skip: Int
+    sort: SortFindOneTransferInput
+  ): Transfer
+  transfers(
+    """Filter by fields"""
+    filter: FilterFindManyTransferInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyTransferInput
+  ): [Transfer!]!
+  transfersPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyTransferInput
+    sort: SortFindManyTransferInput
+  ): TransferPagination
+  bet(
+    """Filter by fields"""
+    filter: FilterFindOneBetInput
+    skip: Int
+    sort: SortFindOneBetInput
+  ): Bet
+  bets(
+    """Filter by fields"""
+    filter: FilterFindManyBetInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyBetInput
+  ): [Bet!]!
+  betsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyBetInput
+    sort: SortFindManyBetInput
+  ): BetPagination
+  betHistory(
+    """Filter by fields"""
+    filter: FilterFindOneBetHistoryInput
+    skip: Int
+    sort: SortFindOneBetHistoryInput
+  ): BetHistory
+  betHistorys(
+    """Filter by fields"""
+    filter: FilterFindManyBetHistoryInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyBetHistoryInput
+  ): [BetHistory!]!
+  betHistorysPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyBetHistoryInput
+    sort: SortFindManyBetHistoryInput
+  ): BetHistoryPagination
+  openBet(
+    """Filter by fields"""
+    filter: FilterFindOneOpenBetInput
+    skip: Int
+    sort: SortFindOneOpenBetInput
+  ): OpenBet
+  openBets(
+    """Filter by fields"""
+    filter: FilterFindManyOpenBetInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyOpenBetInput
+  ): [OpenBet!]!
+  openBetsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyOpenBetInput
+    sort: SortFindManyOpenBetInput
+  ): OpenBetPagination
+  agent(
+    """Filter by fields"""
+    filter: FilterFindOneAgentInput
+    skip: Int
+    sort: SortFindOneAgentInput
+  ): Agent
+  agents(
+    """Filter by fields"""
+    filter: FilterFindManyAgentInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyAgentInput
+  ): [Agent!]!
+  agentsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyAgentInput
+    sort: SortFindManyAgentInput
+  ): AgentPagination
+  agentBalance(
+    """Filter by fields"""
+    filter: FilterFindOneAgentBalanceInput
+    skip: Int
+    sort: SortFindOneAgentBalanceInput
+  ): AgentBalance
+  agentBalances(
+    """Filter by fields"""
+    filter: FilterFindManyAgentBalanceInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyAgentBalanceInput
+  ): [AgentBalance!]!
+  agentBalancesPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyAgentBalanceInput
+    sort: SortFindManyAgentBalanceInput
+  ): AgentBalancePagination
+  weekBalanceAgent(
+    """Filter by fields"""
+    filter: FilterFindOneWeekBalanceAgentInput
+    skip: Int
+    sort: SortFindOneWeekBalanceAgentInput
+  ): WeekBalanceAgent
+  weekBalanceAgents(
+    """Filter by fields"""
+    filter: FilterFindManyWeekBalanceAgentInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyWeekBalanceAgentInput
+  ): [WeekBalanceAgent!]!
+  weekBalanceAgentsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyWeekBalanceAgentInput
+    sort: SortFindManyWeekBalanceAgentInput
+  ): WeekBalanceAgentPagination
+  horseRacing(
+    """Filter by fields"""
+    filter: FilterFindOneHorseRacingInput
+    skip: Int
+    sort: SortFindOneHorseRacingInput
+  ): HorseRacing
+  horseRacings(
+    """Filter by fields"""
+    filter: FilterFindManyHorseRacingInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyHorseRacingInput
+  ): [HorseRacing!]!
+  horseRacingsPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyHorseRacingInput
+    sort: SortFindManyHorseRacingInput
+  ): HorseRacingPagination
+  pollaHipica(
+    """Filter by fields"""
+    filter: FilterFindOnePollaHipicaInput
+    skip: Int
+    sort: SortFindOnePollaHipicaInput
+  ): PollaHipica
+  pollaHipicas(
+    """Filter by fields"""
+    filter: FilterFindManyPollaHipicaInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyPollaHipicaInput
+  ): [PollaHipica!]!
+  pollaHipicasPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyPollaHipicaInput
+    sort: SortFindManyPollaHipicaInput
+  ): PollaHipicaPagination
+  macuare(
+    """Filter by fields"""
+    filter: FilterFindOneMacuareInput
+    skip: Int
+    sort: SortFindOneMacuareInput
+  ): Macuare
+  macuares(
+    """Filter by fields"""
+    filter: FilterFindManyMacuareInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyMacuareInput
+  ): [Macuare!]!
+  macuaresPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyMacuareInput
+    sort: SortFindManyMacuareInput
+  ): MacuarePagination
+  marca(
+    """Filter by fields"""
+    filter: FilterFindOneMarcaInput
+    skip: Int
+    sort: SortFindOneMarcaInput
+  ): Marca
+  marcas(
+    """Filter by fields"""
+    filter: FilterFindManyMarcaInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyMarcaInput
+  ): [Marca!]!
+  marcasPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyMarcaInput
+    sort: SortFindManyMarcaInput
+  ): MarcaPagination
+  puesto(
+    """Filter by fields"""
+    filter: FilterFindOnePuestoInput
+    skip: Int
+    sort: SortFindOnePuestoInput
+  ): Puesto
+  puestos(
+    """Filter by fields"""
+    filter: FilterFindManyPuestoInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyPuestoInput
+  ): [Puesto!]!
+  puestosPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyPuestoInput
+    sort: SortFindManyPuestoInput
+  ): PuestoPagination
+  tablaFija(
+    """Filter by fields"""
+    filter: FilterFindOneTablaFijaInput
+    skip: Int
+    sort: SortFindOneTablaFijaInput
+  ): TablaFija
+  tablaFijas(
+    """Filter by fields"""
+    filter: FilterFindManyTablaFijaInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyTablaFijaInput
+  ): [TablaFija!]!
+  tablaFijasPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyTablaFijaInput
+    sort: SortFindManyTablaFijaInput
+  ): TablaFijaPagination
+  playerBalance(
+    """Filter by fields"""
+    filter: FilterFindOnePlayerBalanceInput
+    skip: Int
+    sort: SortFindOnePlayerBalanceInput
+  ): PlayerBalance
+  playerBalances(
+    """Filter by fields"""
+    filter: FilterFindManyPlayerBalanceInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyPlayerBalanceInput
+  ): [PlayerBalance!]!
+  playerBalancePagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyPlayerBalanceInput
+    sort: SortFindManyPlayerBalanceInput
+  ): PlayerBalancePagination
+  historyAccountPlayer(
+    """Filter by fields"""
+    filter: FilterFindOnePlayerBalanceInput
+    skip: Int
+    sort: SortFindOnePlayerBalanceInput
+  ): PlayerBalance
+  historyAccountPlayers(
+    """Filter by fields"""
+    filter: FilterFindManyPlayerBalanceInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyPlayerBalanceInput
+  ): [PlayerBalance!]!
+  historyAccountPlayerPagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyPlayerBalanceInput
+    sort: SortFindManyPlayerBalanceInput
+  ): PlayerBalancePagination
+
+  """Get the logged in user"""
+  me: User
+}
+
+"""
+The string representation of JavaScript regexp. You may provide it with flags "/^abc.*/i" or without flags like "^abc.*". More info about RegExp characters and flags: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+"""
+scalar RegExpAsString @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf")
+
+type Remate {
+  commission: String!
+  total: Float!
+  initialValue: Float!
+  accumulated: Float!
+  money: Float!
+  horses: [RemateHorses]
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type RemateHorses {
+  ejemplar: String!
+  contBase: String!
+  _id: MongoID
+}
+
+type RemoveOneAgentBalancePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: AgentBalance
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneAgentPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Agent
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneBankAccountPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: BankAccount
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneBetHistoryPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: BetHistory
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Bet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneCreditCardPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: CreditCard
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneHorseRacingPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: HorseRacing
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneMacuarePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Macuare
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneMarcaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Marca
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneOpenBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: OpenBet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOnePollaHipicaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: PollaHipica
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOnePuestoPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Puesto
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneRetirementPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Retirement
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneTablaFijaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: TablaFija
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneTransferPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Transfer
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneWeekBalanceAgentPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: WeekBalanceAgent
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type ResetPasswordInfo {
+  success: Boolean!
+  err: String
+}
+
+input ResetPasswordInput {
+  email: String!
+}
+
+type Retirement {
+  method: String!
+  amount: Float!
+  status: Float!
+  date: Date!
+  bankAccount: BankAccount
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type RetirementPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Retirement!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+input SignInInput {
+  emailOrUsername: String!
+  password: String!
+}
+
+type SignOutMessage {
+  success: Boolean!
+}
+
+input SignUpInput {
+  username: String!
+  firstName: String!
+  lastName: String!
+  dni: String
+  dniType: String
+  email: String!
+  photo: String
+  password: String!
+  confirmPassword: String!
+  address: String
+  role: Int!
+  phone: String
+}
+
+enum SortFindManyAgentBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyBankAccountInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyBetHistoryInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyCreditCardInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyHorseRacingInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyMacuareInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyMarcaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyOpenBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyPlayerBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyPollaHipicaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyPuestoInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyRetirementInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyTablaFijaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyTransferInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindManyUserInput {
+  _ID_ASC
+  _ID_DESC
+  USERNAME_ASC
+  USERNAME_DESC
+  EMAIL_ASC
+  EMAIL_DESC
+}
+
+enum SortFindManyWeekBalanceAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneAgentBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneBankAccountInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneBetHistoryInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneCreditCardInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneHorseRacingInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneMacuareInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneMarcaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneOpenBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOnePlayerBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOnePollaHipicaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOnePuestoInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneRetirementInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneTablaFijaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneTransferInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortFindOneUserInput {
+  _ID_ASC
+  _ID_DESC
+  USERNAME_ASC
+  USERNAME_DESC
+  EMAIL_ASC
+  EMAIL_DESC
+}
+
+enum SortFindOneWeekBalanceAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneAgentBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneBankAccountInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneBetHistoryInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneCreditCardInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneHorseRacingInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneMacuareInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneMarcaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneOpenBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOnePollaHipicaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOnePuestoInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneRetirementInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneTablaFijaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneTransferInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortRemoveOneWeekBalanceAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneAgentBalanceInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneBankAccountInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneBetHistoryInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneCreditCardInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneHorseRacingInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneMacuareInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneMarcaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneOpenBetInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOnePollaHipicaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOnePuestoInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneRetirementInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneTablaFijaInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneTransferInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+enum SortUpdateOneWeekBalanceAgentInput {
+  _ID_ASC
+  _ID_DESC
+}
+
+type Sport {
+  name: String!
+  country: String!
+  competition: String!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+"""
+scalar String
+
+type TablaFija {
+  commission: Float!
+  total: Float!
+  toPage: Float!
+  money: Float!
+  horses: [TablaFijaHorses]
+  horseRacing: HorseRacing
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type TablaFijaHorses {
+  specimen: String!
+  value: String!
+  limit: String!
+  dividend: Float!
+  proportion: Float!
+  _id: MongoID
+}
+
+input TablaFijaHorsesInput {
+  specimen: String!
+  value: String!
+  limit: String!
+  dividend: Float!
+  proportion: Float!
+  _id: MongoID
+}
+
+"""List of items with pagination."""
+type TablaFijaPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [TablaFija!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type Transfer {
+  typeDeposit: String!
+  amount: Float!
+  numberRef: Float!
+  status: String!
+  date: Date!
+  bankAccount: BankAccount
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type TransferPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Transfer!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+input UpdateAgentInput {
+  _id: MongoID!
+  name: String
+  dni: String
+  unitValue: Float
+  active: Boolean
+}
+
+""""""
+input UpdateOneAgentBalanceInput {
+  balance: Float
+  adjust: Float
+  thisWeek: Float
+  date: Date
+  lastWeek: Float
+  beforeMakeup: Float
+  agent: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneAgentBalancePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: AgentBalance
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneBankAccountInput {
+  name: String
+  email: String
+  numberAccount: Float
+  beneficiary: String
+  ABBANumber: String
+  typeMoney: String
+  player: MongoID
+  creditCards: [MongoID]
+  retirements: [MongoID]
+  transfers: [MongoID]
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneBankAccountPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: BankAccount
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneBetHistoryInput {
+  result: Float
+  tax: Float
+  bet: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneBetHistoryPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: BetHistory
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneBetInput {
+  ticket: String
+  type: String
+  date: Date
+  sport: String
+  description: String
+  amount: Float
+  game: String
+  profit: Float
+  result: String
+  user: MongoID
+  agents: [MongoID]
+  hour: Date
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Bet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneCreditCardInput {
+  cardNumber: Float
+  expirationDate: Date
+  securityCode: String
+  nameOwner: String
+  bankAccount: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneCreditCardPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: CreditCard
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneHorseRacingInput {
+  date: Date
+  status: String
+  raceCenter: String
+  raceNumber: String
+  amountPlay: Float
+  sport: MongoID
+  pollaHipica: MongoID
+  macuare: MongoID
+  marca: MongoID
+  puesto: MongoID
+  tablaFija: MongoID
+  remate: MongoID
+  pick: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneHorseRacingPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: HorseRacing
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneMacuareInput {
+  multi: Float
+  amountWin: Float
+  horses: [String]
+  date: Date
+  horseRacing: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneMacuarePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Macuare
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneMarcaInput {
+  race: String
+  logro: String
+  horses: [String]
+  marcas: [String]
+  horseRacing: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneMarcaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Marca
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneOpenBetInput {
+  risk: Float
+  toWin: Float
+  bet: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneOpenBetPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: OpenBet
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOnePollaHipicaInput {
+  cost: Float
+  amount: Float
+  commission: Float
+  place: Float
+  date: Date
+  horseRacing: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOnePollaHipicaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: PollaHipica
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOnePuestoInput {
+  race: String
+  horses: [String]
+  puestos: [String]
+  horseRacing: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOnePuestoPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Puesto
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneRetirementInput {
+  method: String
+  amount: Float
+  status: Float
+  date: Date
+  bankAccount: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneRetirementPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Retirement
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneTablaFijaHorsesInput {
+  specimen: String
+  value: String
+  limit: String
+  dividend: Float
+  proportion: Float
+  _id: MongoID
+}
+
+""""""
+input UpdateOneTablaFijaInput {
+  commission: Float
+  total: Float
+  toPage: Float
+  money: Float
+  horses: [UpdateOneTablaFijaHorsesInput]
+  horseRacing: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneTablaFijaPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: TablaFija
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneTransferInput {
+  typeDeposit: String
+  amount: Float
+  numberRef: Float
+  status: String
+  date: Date
+  bankAccount: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneTransferPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Transfer
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneWeekBalanceAgentInput {
+  pmts: Float
+  balance: Float
+  pending: Float
+  dayOfWeek: Float
+  date: Date
+  bet: MongoID
+  agent: MongoID
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneWeekBalanceAgentPayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: WeekBalanceAgent
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+input UpdatePlayerInput {
+  userId: String!
+  basicInfo: BasicInfoInput
+  accessInfo: AccessInfoInput
+  limitInfo: LimitInfoInput
+}
+
+type User {
+  username: String!
+  firstName: String!
+  lastName: String!
+  dni: String
+  dniType: Float
+  email: String!
+  photo: String
+  password: String!
+  address: String
+  role: Float
+  phone: String
+  player: Player
+  admin: Admin
+  active: Boolean
+  resetToken: String
+  resetTokenExpiry: Float
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type UserPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [User!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type WeekBalanceAgent {
+  pmts: Float!
+  balance: Float!
+  pending: Float!
+  dayOfWeek: Float!
+  date: Date!
+  bet: Bet
+  agent: Agent
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""List of items with pagination."""
+type WeekBalanceAgentPagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [WeekBalanceAgent!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}

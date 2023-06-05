@@ -1,0 +1,43 @@
+{
+  "Create Mongoose Model": {
+    "prefix": "mongomodel",
+    "body": [
+      "import { Schema, Document, model } from 'mongoose';",
+      "import { composeMongoose } from 'graphql-compose-mongoose';",
+      "",
+      "export interface ${TM_FILENAME_BASE}Document extends Document {",
+      "\t${3:property}: string;",
+      "}",
+      "",
+      "const ${2:model}Schema = new Schema(",
+      "\t{",
+      "\t\t${3:property}: {",
+      "\t\t\ttype: String,",
+      "\t\t\trequired: true,",
+      "\t\t},",
+      "\t},",
+      "\t{ timestamps: true },",
+      ");",
+      "",
+      "export const ${TM_FILENAME_BASE} = model<${TM_FILENAME_BASE}Document>('${TM_FILENAME_BASE}', ${2:model}Schema);",
+      "export const ${TM_FILENAME_BASE}TC = composeMongoose(${TM_FILENAME_BASE});",
+      ""
+    ]
+  },
+  "Add relationship": {
+    "prefix": "relationship",
+    "body": [
+      "${TM_FILENAME_BASE}TC.addRelation('${2:propertyName}', {",
+      "\tresolver() {",
+      "\t\treturn ${1:RelationModel}.mongooseResolvers.${3:dataLoader}();",
+      "\t},",
+      "\tprepareArgs: {",
+      "\t\t_id: (source) => source.${2:propertyName},",
+      "\t\tskip: null,",
+      "\t\tsort: null,",
+      "\t},",
+      "\tprojection: { ${2:propertyName}: 1 },",
+      "});"
+    ]
+  }
+}

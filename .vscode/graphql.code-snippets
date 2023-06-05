@@ -1,0 +1,17 @@
+{
+  "Create GraphQL Input": {
+    "prefix": "inputtype",
+    "body": [
+      "export const ${TM_FILENAME_BASE}Input = `",
+      "\tinput ${TM_FILENAME_BASE}Input {",
+      "\t\t${1}",
+      "\t}",
+      "`;",
+      "",
+      "export type T${TM_FILENAME_BASE}Input = {",
+      "\t",
+      "};",
+      ""
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle</title>
+</head>
+
+<body>
+  <ul id="app"></ul>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.emit('CLIENT:NEW_CONNECTION')
+    socket.on('SERVER:UPDATE_DATA', (data) => {
+      const li = document.createElement('li');
+      li.innerHTML = JSON.stringify(data);
+      document.getElementById('app').appendChild(li);
+    });
+    socket.on('SERVER:CLIENT:NEW_CONNECTION', (data) => {
+      console.log(data);
+    });
+  </script>
+</body>
+
+</html>
