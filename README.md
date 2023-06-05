@@ -1,12 +1,7 @@
-# Proyecto Vegas [Backend]
+# Demo conexion AMQP [Backend]
 
 ![Avila Tek Logo](https://avilatek.dev/assets/images/logo_white.png)
 
-El proyecto Vegas es una plataforma de Apuestas en linea, con multiples aplicaciones
-
-## Tooling
-
-Para este proyecto vamos a utilizar el stack regular de [Avila Tek](https://avilatek.dev), sin embargo, para asegurarnos de que todos, contamos con las mismas herramientas (y versiones) es necesario que descarguen [Volta](https://volta.sh), esta herramienta nos permite a todos tener las mismas version de `node.js` y de `npm` y asi evitar problemas.
 
 ## Librerías importantes
 
