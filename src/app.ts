@@ -12,11 +12,11 @@ import router from './routes';
 const app = express();
 
 app.set('port', Number(process.env.PORT) || 3000);
-// app.use(
-//   cors({
-//     origin: [],
-//   })
-// );
+app.use(
+  cors({
+    origin: ['http://localhost:3000'],
+  })
+);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
