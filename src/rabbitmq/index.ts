@@ -22,13 +22,14 @@ export async function createConnection(config: CreateConnectionConfig) {
 
   const channel = await connection.createChannel();
 
-  // const _queue = await channel.checkQueue('TestQuee');
-  const printerQueue = await channel.checkQueue(process.env.PRINTER_QUEUE);
+  const printerQueue = await channel.checkQueue(
+    process.env.PRINTER_QUEUE + process.env.DEVICE_NAME
+  );
   console.log('printerQueue', printerQueue);
-  // const printerQueueResponses = await channel.checkQueue(
-  //   process.env.PRINTER_QUEUE_RESPONSES
-  // );
-  // console.log('printerQueueResponses', printerQueueResponses);
+  const printerQueueResponses = await channel.checkQueue(
+    `${process.env.PRINTER_QUEUE_RESPONSES}${process.env.DEVICE_NAME}`
+  );
+  console.log('printerQueueResponses', printerQueueResponses);
 
   return { connection, channel, queue: printerQueue } as const;
 }
@@ -46,10 +47,14 @@ export async function consumeMessage(
   config: ConsumeMessageConfig,
   callback: TConsumeCallback
 ) {
-  await channel.consume(process.env.PRINTER_QUEUE, callback, {
-    noAck: true,
-    noLocal: false,
-  });
+  await channel.consume(
+    process.env.PRINTER_QUEUE_RESPONSES + process.env.DEVICE_NAME,
+    callback,
+    {
+      noAck: true,
+      noLocal: false,
+    }
+  );
 }
 
 export async function sentMessage(
@@ -60,17 +65,10 @@ export async function sentMessage(
 ) {
   console.log('new message value:', value);
 
-  // convert value (string) to json to add an attribute
-  const valueJson = JSON.parse(value);
-  console.log('valueJson', valueJson);
-
-  valueJson.deviceName = process.env.DEVICE_NAME;
-  console.log('valueJson with device', valueJson);
-
   await channel.sendToQueue(
-    process.env.PRINTER_QUEUE,
+    `${process.env.PRINTER_QUEUE}${process.env.DEVICE_NAME}`,
     Buffer.from(`
-  ${JSON.stringify(valueJson)}
+  ${JSON.stringify(value)}
   `)
   );
 }
